@@ -1,0 +1,31 @@
+{
+  "name": "desafio-siena",
+  "version": "1.0.0",
+  "description": "Desafio técnico Siena Seguros",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --watchAll",
+    "test-coverage": "jest --coverage",
+    "start:watch": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/EddyeBoy27/desafio-siena.git"
+  },
+  "author": "Felipe - EddyeBoy27",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EddyeBoy27/desafio-siena/issues"
+  },
+  "homepage": "https://github.com/EddyeBoy27/desafio-siena#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-rescue": "^1.1.31",
+    "joi": "^17.4.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7"
+  }
+}
