@@ -10,7 +10,7 @@ const objError = {
 const errorController = (err, _req, res, _next) => {
     if (err.error) return res.status(objError[err.error.code] || 500).json(err);
     const now = Date.now();
-    console.error(`ErrorController: Message: ${err.error.message}, Date: ${now}`);
+    console.error(`ErrorController: Message: ${err.message}, Date: ${now}`);
     return res.status(err.status || 500)
         .json({
             error: {
