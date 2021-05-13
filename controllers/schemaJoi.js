@@ -12,6 +12,8 @@ const workflow = Joi.object({
     steps: Joi.array().items(Joi.string(), Joi.number(), Joi.boolean()),
 });
 
+const updateStatus = Joi.object({ status: Joi.number().required() });
+
 const validateJoi = async (schema, req) => {
     const valid = await schema.validateAsync(req).catch((err) => {
         const error = { error: { message: err.message, code: 'invalidData' } };
@@ -22,5 +24,6 @@ const validateJoi = async (schema, req) => {
 
 module.exports = {
     workflow,
+    updateStatus,
     validateJoi,
 };

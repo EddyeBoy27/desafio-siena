@@ -1,6 +1,6 @@
 const rescue = require('express-rescue');
-const { workflow, validateJoi } = require('./schemaJoi');
-const { newWorkflowService, getAllWorkflowsService } = require('../services/workflowService');
+const { workflow, updateStatus, validateJoi } = require('./schemaJoi');
+const { newWorkflowService, getAllWorkflowsService, updateStatusService } = require('../services/workflowService');
 
 const newWorkflow = rescue(async (req, res) => {
   await validateJoi(workflow, req.body);
@@ -13,7 +13,16 @@ const getAllWorkflows = rescue(async (_req, res) => {
   return res.status(200).json(serviceAnswer);
 });
 
+const updateStatusUuid = rescue(async (req, res) => {
+  await validateJoi(updateStatus, req.body);
+  const { uuid } = req.params;
+  const { status } = req.body;
+  await updateStatusService(uuid, status);
+  return res.status(200);
+});
+
 module.exports = {
   newWorkflow,
   getAllWorkflows,
+  updateStatusUuid,
 };

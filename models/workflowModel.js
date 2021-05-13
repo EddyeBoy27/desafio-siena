@@ -9,7 +9,6 @@ const getFromUuid = async (uuid) => {
   if (rows.length === 0) {
     return false;
   }
-  console.log(rows);
   return rows;
 };
 
@@ -37,8 +36,17 @@ const newWorkflowModel = async ({ UUID, status, data, steps }) => {
   return rows;
 };
 
+const updateStatusModel = async (uuid, status) => {
+  const sql = 'UPDATE workflow SET status = $1 WHERE uuid = $2';
+  await db.query(sql, [status, uuid]).catch((error) => {
+    const errorMsg = { error: { message: error.message, code: 'badRequest' } };
+    throw errorMsg;
+  });
+};
+
 module.exports = {
   getFromUuid,
   newWorkflowModel,
   getAllWorkflowsModel,
+  updateStatusModel,
 };

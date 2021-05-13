@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const { newWorkflow, getAllWorkflows } = require('./controllers/workflowController');
+const { newWorkflow, getAllWorkflows, updateStatusUuid } = require('./controllers/workflowController');
 const { endpointNotFound, errorController } = require('./middlewares/errorMiddleware');
 
 const app = express();
@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.post('/workflow', newWorkflow);
 app.get('/workflow', getAllWorkflows);
+app.patch('/workflow/:uuid', updateStatusUuid);
 
 app.use(errorController);
 app.all('*', endpointNotFound);

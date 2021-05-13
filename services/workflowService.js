@@ -1,4 +1,6 @@
-const { getFromUuid, newWorkflowModel, getAllWorkflowsModel } = require('../models/workflowModel');
+const {
+    getFromUuid, newWorkflowModel, getAllWorkflowsModel, updateStatusModel,
+} = require('../models/workflowModel');
 
 const newWorkflowService = async (body) => {
     const { UUID, status, data, steps } = body;
@@ -16,7 +18,18 @@ const getAllWorkflowsService = async () => {
     return modelAnswer;
 };
 
+const updateStatusService = async (uuid, status) => {
+    const exists = await getFromUuid(uuid);
+    if (!exists || exists.length !== 0) {
+        await updateStatusModel(uuid, status);
+    } else {
+        const error = { error: { message: 'UUID doens\'t exist\'s', code: 'notFound' } };
+        throw error;
+    }
+};
+
 module.exports = {
     newWorkflowService,
     getAllWorkflowsService,
+    updateStatusService,
 };
