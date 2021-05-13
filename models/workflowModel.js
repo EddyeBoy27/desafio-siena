@@ -1,5 +1,14 @@
 const db = require('../db/connection');
 
+const getAllWorkflowsModel = async () => {
+  const sql = 'SELECT * FROM workflow';
+  const { rows } = await db.query(sql).catch((error) => {
+    const errorMsg = { error: { message: error.message, code: 'notFound' } };
+    throw errorMsg;
+  });
+  return rows;
+};
+
 const getFromUuid = async (uuid) => {
   const sql = 'SELECT * FROM workflow WHERE uuid = $1';
   const { rows } = await db.query(sql, [uuid]).catch((error) => {
@@ -9,15 +18,6 @@ const getFromUuid = async (uuid) => {
   if (rows.length === 0) {
     return false;
   }
-  return rows;
-};
-
-const getAllWorkflowsModel = async () => {
-  const sql = 'SELECT * FROM workflow';
-  const { rows } = await db.query(sql).catch((error) => {
-    const errorMsg = { error: { message: error.message, code: 'notFound' } };
-    throw errorMsg;
-  });
   return rows;
 };
 
