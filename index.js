@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const { newWorkflowController } = require('./controllers/workflowController');
+const { newWorkflowController, getAllWorkflows } = require('./controllers/workflowController');
 const { endpointNotFound, errorController } = require('./middlewares/errorMiddleware');
 
 const app = express();
@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post('/workflow', newWorkflowController);
+app.get('/workflow', getAllWorkflows);
 
 app.use(errorController);
 app.all('*', endpointNotFound);

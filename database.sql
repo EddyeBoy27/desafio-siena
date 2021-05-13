@@ -12,10 +12,8 @@ insert into status_tb (status) values
 create table if not EXISTS workflow (
 	id serial primary key,
 	uuid varchar (50) unique,
-	status int,
-	CONSTRAINT status
-		foreign KEY(id)
-			REFERENCES status_tb(id),
+	status int not null,
+	foreign key(status) REFERENCES status_tb(id),
 	json_data text,
 	array_data text
 );
