@@ -1,4 +1,4 @@
-const { getFromUuid, newWorkflowModel } = require('../models/workflowModel');
+const { getFromUuid, newWorkflowModel, getAllWorkflowsModel } = require('../models/workflowModel');
 
 const newWorkflowService = async (body) => {
     const { UUID, status, data, steps } = body;
@@ -11,6 +11,12 @@ const newWorkflowService = async (body) => {
     throw error;
 };
 
+const getAllWorkflowsService = async () => {
+    const modelAnswer = await getAllWorkflowsModel();
+    return modelAnswer;
+};
+
 module.exports = {
     newWorkflowService,
+    getAllWorkflowsService,
 };

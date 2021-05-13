@@ -13,6 +13,15 @@ const getFromUuid = async (uuid) => {
   return rows;
 };
 
+const getAllWorkflowsModel = async () => {
+  const sql = 'SELECT * FROM workflow';
+  const { rows } = await db.query(sql).catch((error) => {
+    const errorMsg = { error: { message: error.message, code: 'notFound' } };
+    throw errorMsg;
+  });
+  return rows;
+};
+
 const newWorkflowModel = async ({ UUID, status, data, steps }) => {
   const sql = 'INSERT INTO workflow (uuid, status, json_data, array_data) VALUES ($1, $2, $3, $4) RETURNING *';
   const dataJson = JSON.stringify(data);
@@ -31,4 +40,5 @@ const newWorkflowModel = async ({ UUID, status, data, steps }) => {
 module.exports = {
   getFromUuid,
   newWorkflowModel,
+  getAllWorkflowsModel,
 };
