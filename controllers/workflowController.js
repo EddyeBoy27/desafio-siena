@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-const mime = require('mime');
 const rescue = require('express-rescue');
 const pdf = require('html-pdf');
 const { workflow, updateStatus, validateJoi } = require('./schemaJoi');
@@ -38,24 +35,14 @@ const generatePdf = rescue(async (_req, res) => {
     </ul>
   `;
 
-  const pdfAnswer = pdf
-    .create(html, options)
-    .toFile('./workflow.pdf', (err, _) => {
-      if (err) {
-        return console.log(err);
-      }
-      const file = `${__dirname}/upload-folder/dramaticpenguin.MOV`;
-
-      const filename = path.basename(file);
-      const mimetype = mime.lookup(file);
-
-      res.setHeader('Content-disposition', `attachment; filename=${filename}`);
-      res.setHeader('Content-type', mimetype);
-
-      const filestream = fs.createReadStream(file);
-      filestream.pipe(res);
-    });
-  return res.status(200).json(pdfAnswer);
+  pdf.create(html, options).toFile('./workflow.pdf', (err, _) => {
+    if (err) {
+      const errorMsg = { error: { message: err.message, code: 'badRequest' } };
+      throw errorMsg;
+    }
+  });
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  return res.download('./workflow.pdf');
 });
 
 module.exports = {
